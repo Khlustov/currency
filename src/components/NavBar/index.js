@@ -7,18 +7,24 @@ import Slide from '@material-ui/core/Slide';
 const useStyles = makeStyles((theme) => ({
     navBar: {
         width: '100%',
-        height: '10vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        height: '10vh',        
     },
     navBarLink: {
         textDecoration: 'none',
         margin: '0 20px',
-        fontFamily: 'Nunito'
+        fontFamily: 'Nunito',
+        color: '#6d6d6d',
+        '&:hover': {
+            color: '#000'
+        },
+        transition: `all 400ms ease-in-out`,
     },
     navBarLinksContainer: {
-
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 }));
 
