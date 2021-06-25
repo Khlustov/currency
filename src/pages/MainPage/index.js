@@ -8,6 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Zoom from '@material-ui/core/Zoom';
 
 const useStyles = makeStyles((theme) => ({
     mainPage: {
@@ -34,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         fontFamily: 'Nunito',
         color: '#000'
+    },
+    collapse: {
+        width: '100%',
+        height: '100%',
     }
 }));
 
@@ -62,33 +67,38 @@ const MainPage = () => {
 
     return (
         <div className={classes.mainPage}>
-            <div className={classes.mainPageWrapper}>
-                <TableContainer className={classes.tableContainer}>
-                    <Table stickyHeader>
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableCell key={column.id} className={classes.tableCellHeader}>
-                                        {column.label}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.map((row) => {
-                                return (
-                                    <TableRow hover key={row.Cur_ID}>
-                                       <TableCell className={classes.tableCellBody}>{row.Cur_Abbreviation}</TableCell>
-                                       <TableCell className={classes.tableCellBody}>{row.Cur_Scale}</TableCell>
-                                       <TableCell className={classes.tableCellBody}>{row.Cur_Name}</TableCell>
-                                       <TableCell className={classes.tableCellBody}>{row.Cur_OfficialRate}</TableCell>
-                                    </TableRow>
-                                )
-                            })}        
-                        </TableBody>
-                    </Table>
-                </TableContainer>                    
-            </div>
+            <Zoom 
+            in={currencies}
+            {...(currencies ? {timeout: 1000} : {})}
+            >
+                <div className={classes.mainPageWrapper}>
+                    <TableContainer className={classes.tableContainer}>
+                        <Table stickyHeader>
+                            <TableHead>
+                                <TableRow>
+                                    {columns.map((column) => (
+                                        <TableCell key={column.id} className={classes.tableCellHeader}>
+                                            {column.label}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rows.map((row) => {
+                                    return (
+                                        <TableRow hover key={row.Cur_ID}>
+                                           <TableCell className={classes.tableCellBody}>{row.Cur_Abbreviation}</TableCell>
+                                           <TableCell className={classes.tableCellBody}>{row.Cur_Scale}</TableCell>
+                                           <TableCell className={classes.tableCellBody}>{row.Cur_Name}</TableCell>
+                                           <TableCell className={classes.tableCellBody}>{row.Cur_OfficialRate}</TableCell>
+                                        </TableRow>
+                                    )
+                                })}        
+                            </TableBody>
+                        </Table>
+                    </TableContainer>                    
+                </div>
+            </Zoom>
         </div>
     )
 };
