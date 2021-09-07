@@ -33,7 +33,7 @@ const Navbar = () => {
     const [checked, setChecked] = useState(false);
 
     useEffect(() => {
-        setChecked(true);
+        setChecked((prev) => !prev);
     }, [])
     
 

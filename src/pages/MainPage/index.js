@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCurrencies } from '../../actions/getAllCurrencies';
@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Zoom from '@material-ui/core/Zoom';
+import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles((theme) => ({
     mainPage: {
@@ -44,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 const columns = [
     {id: 'currencyAbbreviation', label: 'Аббревиатура', minWidth: 170, align: 'center', format: (value) => value.toLocaleString('en-US')},    
-    {id: 'currencyName', label: 'Валюта', minWidth: 170, align: 'center'},
-    {id: 'scale', label: 'Количество', minWidth: 170, align: 'center'},
+    {id: 'currencyName', label: 'Количество', minWidth: 170, align: 'center'},
+    {id: 'scale', label: 'Валюта', minWidth: 170, align: 'center'},
     {id: 'rate', label: 'Курс', minWidth: 170, align: 'center'}, 
 ];
 
@@ -53,23 +53,26 @@ const MainPage = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const currencies = useSelector(state => state.main.currencies); 
+    const [checked, setChecked] = useState(false);
     const rows = [];   
 
     if(currencies) {
         currencies.map((item) => {
-            rows.push(item);
+            return rows.push(item);
         });
-    }
+    };
     
     useEffect(() => {
-        dispatch(getAllCurrencies());        
-    }, [dispatch])
+        dispatch(getAllCurrencies());
+        setChecked((prev) => !prev);        
+    }, [dispatch]);
 
     return (
         <div className={classes.mainPage}>
-            <Zoom 
-            in={currencies}
-            {...(currencies ? {timeout: 1000} : {})}
+            <Slide
+            direction='up'            
+            in={checked}
+            {...(checked) ? {timeout: 1000} : {}}
             >
                 <div className={classes.mainPageWrapper}>
                     <TableContainer className={classes.tableContainer}>
@@ -98,7 +101,7 @@ const MainPage = () => {
                         </Table>
                     </TableContainer>                    
                 </div>
-            </Zoom>
+            </Slide>
         </div>
     )
 };
