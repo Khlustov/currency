@@ -50,7 +50,7 @@ const Footer = () => {
 
     const showModal = useCallback(() => {
         dispatch(showEmailModal());
-    }, [dispatch]) 
+    }, [dispatch]); 
 
     useEffect(() => {
         setChecked((prev) => !prev);

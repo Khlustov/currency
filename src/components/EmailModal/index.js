@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import { hideEmailModal } from '../../actions/emailModal';
 
 const useStyles = makeStyles((theme) => ({
     emailModalWrapper: {
@@ -16,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: '1000',
-        transform: 'scale(0)',        
+        transform: 'scale(0)',
+        transition: '0.5s',        
     },
     emailModalWrapperActive: {
         width: '100%',
@@ -30,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         zIndex: '1000',
         transform: 'scale(1)',
-        transition: '0.5s'
+        transition: '0.5s',
     },
     modal: {
         width: '50%',        
@@ -65,8 +67,12 @@ const useStyles = makeStyles((theme) => ({
 
 const EmailModal = () => {
     const active = useSelector(state => state.emailModal.active);
-    
+    const dispatch = useDispatch();
     const classes = useStyles();
+
+    const hideModal = useCallback(() => {
+        dispatch(hideEmailModal());
+    }, [dispatch])
 
     return (
         <div 
@@ -96,7 +102,7 @@ const EmailModal = () => {
                     />    
                 </div> 
                 <div className={classes.buttonsContainer}>
-                    <Button color="secondary">Отмена</Button>
+                    <Button color="secondary" onClick={hideModal}>Отмена</Button>
                     <Button color="primary">Отправить</Button>                    
                 </div>               
             </form>
