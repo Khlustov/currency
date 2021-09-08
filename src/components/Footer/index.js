@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 import EmailIcon from '@material-ui/icons/Email';
 import TelegramIcon from '@material-ui/icons/Telegram';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import { useDispatch } from 'react-redux';
+import { showEmailModal } from '../../actions/emailModal';
 
 const useStyles = makeStyles((theme) => ({
     footer: {
@@ -43,7 +45,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Footer = () => {
     const classes = useStyles();
-    const [checked, setChecked] = useState(false);
+    const dispatch = useDispatch();
+    const [checked, setChecked] = useState(false);    
+
+    const showModal = useCallback(() => {
+        dispatch(showEmailModal());
+    }, [dispatch]) 
 
     useEffect(() => {
         setChecked((prev) => !prev);
@@ -86,7 +93,7 @@ const Footer = () => {
                 {...checked ? {timeout: 500} : {}}
                 >
                     <div className={classes.iconContainer}>
-                        <button className={classes.emailButton}>
+                        <button className={classes.emailButton} onClick={showModal}>
                             <EmailIcon
                             className={classes.icons}
                             >
