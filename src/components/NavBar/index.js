@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: 'Nunito',
         color: '#6d6d6d',
         '&:hover': {
-            color: '#000'
+            color: '#3f51b5'
         },
         transition: `all 400ms ease-in-out`,
     },

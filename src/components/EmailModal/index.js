@@ -35,7 +35,10 @@ const useStyles = makeStyles((theme) => ({
         transition: '0.5s',
     },
     modal: {
-        width: '50%',        
+        width: '95%',
+        [theme.breakpoints.up('sm')]: {
+            width: '55%',
+        },        
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -62,6 +65,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-end',
         marginTop: '2rem',
         marginBottom: '1rem',        
+    },
+    modalButton: {
+        fontFamily: 'Nunito',
     }
 }));
 
@@ -102,8 +108,19 @@ const EmailModal = () => {
                     />    
                 </div> 
                 <div className={classes.buttonsContainer}>
-                    <Button color="secondary" onClick={hideModal}>Отмена</Button>
-                    <Button color="primary">Отправить</Button>                    
+                    <Button 
+                    color="secondary" 
+                    onClick={hideModal}
+                    className={classes.modalButton}
+                    >
+                    Отмена
+                    </Button>
+                    <Button 
+                    color="primary"
+                    className={classes.modalButton}
+                    >
+                    Отправить
+                    </Button>                    
                 </div>               
             </form>
         </div>

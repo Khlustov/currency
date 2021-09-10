@@ -17,11 +17,13 @@ const useStyles = makeStyles((theme) => ({
     },
     footerIconsContainer: {
         width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: '80%',
+        },
         height: '100%',
         display: 'flex',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        marginRight: 100,
     },
     iconContainer: {
         margin: '0 10px',
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     icons: {
         color: '#6d6d6d',
         '&:hover': {
-            color: '#000'
+            color: '#3f51b5'
         },
         transition: `all 400ms ease-in-out`,
     },

@@ -18,7 +18,10 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     mainPageWrapper: {
-        width: '80%',
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: '80%',
+        }
     },
     tableContainer: {
         width: '100%',
