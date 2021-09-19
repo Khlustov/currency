@@ -7,7 +7,10 @@ import Slide from '@material-ui/core/Slide';
 const useStyles = makeStyles((theme) => ({
     navBar: {
         width: '100%',
-        height: '10vh',        
+        height: '10vh', 
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',       
     },
     navBarLink: {
         textDecoration: 'none',
@@ -20,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         transition: `all 400ms ease-in-out`,
     },
     navBarLinksContainer: {
-        width: '100%',
+        width: '85%',
         height: '100%',
         display: 'flex',
         justifyContent: 'center',

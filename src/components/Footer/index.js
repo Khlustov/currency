@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     footerIconsContainer: {
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            width: '80%',
+            width: '85%',
         },
         height: '100%',
         display: 'flex',
@@ -28,19 +28,24 @@ const useStyles = makeStyles((theme) => ({
     iconContainer: {
         margin: '0 10px',
     },
-    icons: {
+    iconContainerLast: {
+        margin: '0 30px 0 10px',
+        [theme.breakpoints.up('sm')]: {
+            margin: '0 0 0 10px',
+        },
+    },
+    icons: {        
         color: '#6d6d6d',
         '&:hover': {
             color: '#3f51b5'
         },
         transition: `all 400ms ease-in-out`,
     },
-    emailButton: {
-        width: '100%',
-        height: '100%',
+    emailButton: {         
+        padding: '0',       
         background: 'none',
         border: 'none',
-        cursor: 'pointer',
+        cursor: 'pointer',        
     }
    
 }));
@@ -94,7 +99,7 @@ const Footer = () => {
                 in={checked}
                 {...checked ? {timeout: 500} : {}}
                 >
-                    <div className={classes.iconContainer}>
+                    <div className={classes.iconContainerLast}>
                         <button className={classes.emailButton} onClick={showModal}>
                             <EmailIcon
                             className={classes.icons}

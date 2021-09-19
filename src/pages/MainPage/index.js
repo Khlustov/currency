@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     mainPageWrapper: {
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            width: '80%',
+            width: '85%',
         }
     },
     tableContainer: {

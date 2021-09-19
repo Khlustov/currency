@@ -1,9 +1,14 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import { hideEmailModal } from '../../actions/emailModal';
+import { hideEmailModal, 
+         changeEmailSenderName, 
+         changeEmailSenderAdress, 
+         changeEmailSenderMessage 
+        } from '../../actions/emailModal';
+import emailjs from 'emailjs-com';
 
 const useStyles = makeStyles((theme) => ({
     emailModalWrapper: {
@@ -18,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         zIndex: '1000',
         transform: 'scale(0)',
-        transition: '0.5s',        
+        transition: '0.35s',        
     },
     emailModalWrapperActive: {
         width: '100%',
@@ -32,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         zIndex: '1000',
         transform: 'scale(1)',
-        transition: '0.5s',
+        transition: '0.35s',
     },
     modal: {
         width: '95%',
@@ -75,28 +80,64 @@ const EmailModal = () => {
     const active = useSelector(state => state.emailModal.active);
     const dispatch = useDispatch();
     const classes = useStyles();
+    const name = useSelector(state => state.emailModal.emailSenderName);
+    const adress = useSelector(state => state.emailModal.emailSenderAdress);
+    const message = useSelector(state => state.emailModal.emailSenderMessage);
+    const form = useRef();
 
     const hideModal = useCallback(() => {
         dispatch(hideEmailModal());
-    }, [dispatch])
+    }, [dispatch]);
+
+    const onChangeEmailSenderName = useCallback((event) => {
+        dispatch(changeEmailSenderName(event.target.value));
+    }, [dispatch]);
+
+    const onChangeEmailSenderAdress = useCallback((event) => {
+        dispatch(changeEmailSenderAdress(event.target.value));
+    }, [dispatch]);
+
+    const onChangeEmailSenderMessage = useCallback((event) => {
+        dispatch(changeEmailSenderMessage(event.target.value));
+    }, [dispatch]);
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+        emailjs.sendForm('service_prlbftj', 'template_lhic5qr', form.current, 'user_L5D5b8atUSGUyPsjyBiuP')
+        .then((result) => {
+          console.log(result.text);
+        }, (error) => {
+          console.log(error.text);
+        });
+        setTimeout(() => {dispatch(hideEmailModal())}, 500)
+    }
 
     return (
         <div 
         className={active ? classes.emailModalWrapperActive : classes.emailModalWrapper}
         >
-            <form className={classes.modal}>
+            <form 
+            ref={form}
+            className={classes.modal}           
+            >
                 <div className={classes.inputContainer}>
                     <TextField 
                     label="Ваше имя" 
                     variant="outlined"
                     size="small"
                     className={classes.input}
+                    value={name}
+                    onChange={onChangeEmailSenderName}
+                    name='name'
                     />
                     <TextField 
                     label="Ваш email" 
                     variant="outlined"
                     size="small"
                     className={classes.input}
+                    value={adress}
+                    onChange={onChangeEmailSenderAdress}
+                    name='email'
                     />
                     <TextField               
                     label="Текст сообщения"
@@ -105,6 +146,9 @@ const EmailModal = () => {
                     variant="outlined"
                     size="small"
                     className={classes.input}
+                    value={message}
+                    onChange={onChangeEmailSenderMessage}
+                    name='message'
                     />    
                 </div> 
                 <div className={classes.buttonsContainer}>
@@ -116,13 +160,14 @@ const EmailModal = () => {
                     Отмена
                     </Button>
                     <Button 
-                    color="primary"
+                    color="primary" 
+                    onClick={sendEmail}
                     className={classes.modalButton}
                     >
                     Отправить
                     </Button>                    
                 </div>               
-            </form>
+            </form>           
         </div>
     )
 };
