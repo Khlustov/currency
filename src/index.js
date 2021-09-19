@@ -19,7 +19,7 @@ ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
       <Navigator/>
-    </React.StrictMode>,
+    </React.StrictMode>
   </Provider>,
   document.getElementById('root')
 );

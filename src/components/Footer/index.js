@@ -107,8 +107,7 @@ const Footer = () => {
                             </EmailIcon>
                         </button>
                     </div>    
-                </Slide> 
-                
+                </Slide>                
             </div>
         </div>
     )

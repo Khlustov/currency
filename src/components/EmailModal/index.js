@@ -76,13 +76,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const EmailModal = () => {
-    const active = useSelector(state => state.emailModal.active);
+const EmailModal = () => {    
     const dispatch = useDispatch();
     const classes = useStyles();
+
+    const active = useSelector(state => state.emailModal.active);
     const name = useSelector(state => state.emailModal.emailSenderName);
     const adress = useSelector(state => state.emailModal.emailSenderAdress);
     const message = useSelector(state => state.emailModal.emailSenderMessage);
+    
     const form = useRef();
 
     const hideModal = useCallback(() => {
@@ -167,7 +169,7 @@ const EmailModal = () => {
                     Отправить
                     </Button>                    
                 </div>               
-            </form>           
+            </form>            
         </div>
     )
 };

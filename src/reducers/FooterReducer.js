@@ -5,6 +5,7 @@ const initialState = {
     emailSenderName: '',
     emailSenderAdress: '',
     emailSenderMessage: '',
+    successSendingEmail: false,
 };
 
 const reducer = (state = initialState, action) => {

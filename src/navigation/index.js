@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Navbar, Footer, EmailModal } from '../components';
+import { Navbar, Footer, EmailModal, SuccessEmailSending } from '../components';
 import { ROUTES } from '../constants';
 import { MainPage, ConverterPage } from '../pages';
 
@@ -14,7 +14,8 @@ export const Navigator = () => {
                 <Route path={ROUTES.MAIN} component={MainPage}/>
             </Switch>
             <Footer/>
-            <EmailModal/>
+            <EmailModal/> 
+            <SuccessEmailSending/>          
         </BrowserRouter>
     )
 }
