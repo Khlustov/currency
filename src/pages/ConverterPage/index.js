@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { getAllAbbreviations, onChangeTextareaValue } from '../../actions/converter';
+import { RateReviewSharp } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     converterPage: {
@@ -25,6 +28,37 @@ const useStyles = makeStyles((theme) => ({
 const ConverterPage = () => {
     
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const currencies = useSelector(state => state.converter.abbreviation);
+    const inputValue = useSelector(state => state.converter.inputValue);
+    const [fromCurrency, setFromCurrency] = useState('');    
+    let rate; 
+        
+  
+    const rates = Object.fromEntries(currencies.map((n) => [n.Cur_Abbreviation, n.Cur_OfficialRate / n.Cur_Scale]))    
+    const abbreviatures = Object.keys(rates);
+    
+    abbreviatures.forEach(key => {        
+        if(key === fromCurrency) {            
+            rate = rates[key]
+        }
+    })
+   
+    const result = inputValue * rate;
+         
+    
+    useEffect(() => {
+        dispatch(getAllAbbreviations());               
+    }, [dispatch]);      
+    
+
+    const fromCurrencyHandleChange = (event) => {        
+        setFromCurrency(event.target.value);        
+      }; 
+      
+    const inputValueHandleChange = useCallback((event) => {
+        dispatch(onChangeTextareaValue(event.target.value))
+    }, [dispatch])
 
     return (
         <div className={classes.converterPage}>
@@ -32,33 +66,20 @@ const ConverterPage = () => {
                 <TextField 
                 className={classes.converterInputElement}
                 id="outlined-basic"                
-                variant="outlined" 
+                variant="outlined"
+                onChange={inputValueHandleChange} 
+                value={inputValue}
                 />                
-                <Select 
-                className={classes.converterInputElement}
-                labelId="label" 
-                id="select" 
-                value="20" 
-                variant="outlined">
-                  <MenuItem value="10">Ten</MenuItem>
-                  <MenuItem value="20">Twenty</MenuItem>
-                </Select>
+                <select                
+                className={classes.converterInputElement}                
+                onChange={fromCurrencyHandleChange}                 
+                value={fromCurrency}                
+                > 
+                {abbreviatures.map((item) => (<option key={item} value={item}>{item}</option>))}                
+                </select>                
             </div>
             <div className={classes.converterInputContainer}>
-                <TextField 
-                className={classes.converterInputElement}
-                id="outlined-basic"                
-                variant="outlined" 
-                />                
-                <Select 
-                className={classes.converterInputElement}
-                labelId="label" 
-                id="select" 
-                value="20" 
-                variant="outlined">
-                  <MenuItem value="10">Ten</MenuItem>
-                  <MenuItem value="20">Twenty</MenuItem>
-                </Select>
+                {result ? result : ''} BYN
             </div>
         </div>
     )

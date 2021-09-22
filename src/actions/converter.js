@@ -1,18 +1,18 @@
 import { actionTypes } from '../constants';
 import axios from 'axios';
 
-export const getAllCurrencies = () => {
+export const getAllAbbreviations = () => {
     return async (dispatch) => {
 
         dispatch({
-            type: actionTypes.GET_ALL_CURRENCIES_START
+            type: actionTypes.GET_CURRENCIES_ABBREVIATIONS_START
         });
 
         try {
             const response = await axios.get('https://www.nbrb.by/api/exrates/rates?periodicity=0');
 
             dispatch({
-                type: actionTypes.GET_ALL_CURRENCIES_SUCCESS,
+                type: actionTypes.GET_CURRENCIES_ABBREVIATIONS_SUCCESS,
                 payload: response.data
             })
         }
@@ -20,7 +20,7 @@ export const getAllCurrencies = () => {
         catch (error) {
 
             dispatch({
-                type: actionTypes.GET_ALL_CURRENCIESS_FAILURE,
+                type: actionTypes.GET_CURRENCIES_ABBREVIATIONS_FAILURE,
                 payload: error.response
             })
 
@@ -28,3 +28,11 @@ export const getAllCurrencies = () => {
 
     };
 };
+
+export const onChangeTextareaValue = (payload) => {
+    return {
+        type: actionTypes.CHANGE_CONVERTER_VALUE,
+        payload
+    }
+}
+
