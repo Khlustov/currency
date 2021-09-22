@@ -24,6 +24,25 @@ const useStyles = makeStyles((theme) => ({
     },
     converterInputElement: {
         margin: '0 10px',
+    },
+    converterResult: {        
+        fontFamily: 'Nunito',
+        fontSize: '48px',
+        color: '#3f51b5',
+        fontWeight: '700',
+        margin: '0 7px',
+    },
+    converterResultContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        [theme.breakpoints.up('sm')]: {
+            display: 'flex',  
+            flexDirection: 'row',          
+            justifyContent: 'center',
+            alignItems: 'center',           
+        },
     }
 }));
 
@@ -31,7 +50,7 @@ const ConverterPage = () => {
     
     const classes = useStyles();
     const dispatch = useDispatch();
-    const currencies = useSelector(state => state.main.currencies);
+    const currencies = useSelector(state => state.converter.currencies);
     const inputValue = useSelector(state => state.converter.inputValue);
     const [fromCurrency, setFromCurrency] = useState('');      
     let rate; 
@@ -62,9 +81,9 @@ const ConverterPage = () => {
 
     return (
         <div className={classes.converterPage}>
-            <div className={classes.converterInputContainer}>                
-                <CountUp start={0} end={result} duration={0.75} decimals={4}/>
-                <span>BYN</span>
+            <div className={classes.converterResultContainer}>                
+                <CountUp className={classes.converterResult}start={0} end={result} duration={0.75} decimals={4}/>
+                <span className={classes.converterResult}>BYN</span>
             </div>
             <div className={classes.converterInputContainer}>
                 <TextField 
