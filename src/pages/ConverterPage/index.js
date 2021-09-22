@@ -4,8 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { getAllAbbreviations, onChangeTextareaValue } from '../../actions/converter';
-import { RateReviewSharp } from '@material-ui/icons';
+import { onChangeTextareaValue } from '../../actions/converter';
+import { getAllCurrencies } from '../../actions/getAllCurrencies';
+import CountUp from 'react-countup';
+
 
 const useStyles = makeStyles((theme) => ({
     converterPage: {
@@ -29,10 +31,14 @@ const ConverterPage = () => {
     
     const classes = useStyles();
     const dispatch = useDispatch();
-    const currencies = useSelector(state => state.converter.abbreviation);
+    const currencies = useSelector(state => state.main.currencies);
     const inputValue = useSelector(state => state.converter.inputValue);
-    const [fromCurrency, setFromCurrency] = useState('');    
+    const [fromCurrency, setFromCurrency] = useState('');      
     let rate; 
+
+    useEffect(() => {
+        dispatch(getAllCurrencies());                
+    }, [dispatch]);
         
   
     const rates = Object.fromEntries(currencies.map((n) => [n.Cur_Abbreviation, n.Cur_OfficialRate / n.Cur_Scale]))    
@@ -44,14 +50,8 @@ const ConverterPage = () => {
         }
     })
    
-    const result = inputValue * rate;
-         
-    
-    useEffect(() => {
-        dispatch(getAllAbbreviations());               
-    }, [dispatch]);      
-    
-
+    const result = inputValue * rate;       
+                 
     const fromCurrencyHandleChange = (event) => {        
         setFromCurrency(event.target.value);        
       }; 
@@ -62,6 +62,10 @@ const ConverterPage = () => {
 
     return (
         <div className={classes.converterPage}>
+            <div className={classes.converterInputContainer}>                
+                <CountUp start={0} end={result} duration={0.75} decimals={4}/>
+                <span>BYN</span>
+            </div>
             <div className={classes.converterInputContainer}>
                 <TextField 
                 className={classes.converterInputElement}
@@ -70,17 +74,16 @@ const ConverterPage = () => {
                 onChange={inputValueHandleChange} 
                 value={inputValue}
                 />                
-                <select                
+                <Select                               
                 className={classes.converterInputElement}                
                 onChange={fromCurrencyHandleChange}                 
-                value={fromCurrency}                
+                value={fromCurrency} 
+                defaultValue={''} 
+                variant='outlined'              
                 > 
-                {abbreviatures.map((item) => (<option key={item} value={item}>{item}</option>))}                
-                </select>                
-            </div>
-            <div className={classes.converterInputContainer}>
-                {result ? result : ''} BYN
-            </div>
+                {abbreviatures.map((item) => (<MenuItem key={item} value={item}>{item}</MenuItem>))}                
+                </Select>                
+            </div>            
         </div>
     )
 };
