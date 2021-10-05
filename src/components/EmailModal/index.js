@@ -115,7 +115,11 @@ const EmailModal = () => {
         dispatch(showAlert());
         setTimeout(() => {dispatch(hideEmailModal())}, 500);
         setTimeout(() => {dispatch(hideAlert())}, 2500);
-    }
+    };
+
+    const correctEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    const notEmptyField = /^(?!\s*$).+/;
+
 
     return (
         <div 
@@ -134,6 +138,7 @@ const EmailModal = () => {
                     value={name}
                     onChange={onChangeEmailSenderName}
                     name='name'
+                    color={notEmptyField.test(name) ? "primary" : "secondary"}
                     />
                     <TextField 
                     label="Ваш email" 
@@ -143,6 +148,7 @@ const EmailModal = () => {
                     value={adress}
                     onChange={onChangeEmailSenderAdress}
                     name='email'
+                    color={correctEmail.test(adress) ? "primary" : "secondary"}
                     />
                     <TextField               
                     label="Текст сообщения"
@@ -154,6 +160,7 @@ const EmailModal = () => {
                     value={message}
                     onChange={onChangeEmailSenderMessage}
                     name='message'
+                    color={notEmptyField.test(message) ? "primary" : "secondary"}
                     />    
                 </div> 
                 <div className={classes.buttonsContainer}>
@@ -168,6 +175,7 @@ const EmailModal = () => {
                     color="primary" 
                     onClick={sendEmail}
                     className={classes.modalButton}
+                    disabled={notEmptyField.test(name) && correctEmail.test(adress) && notEmptyField.test(message) ? false : true}
                     >
                     Отправить
                     </Button>                    
