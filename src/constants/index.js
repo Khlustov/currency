@@ -20,4 +20,8 @@ export const actionTypes = {
     
     // converter page input actions
     CHANGE_CONVERTER_VALUE: 'CHANGE_CONVERTER_VALUE',
+    
+    // alert actions
+    SET_ALERT_ACTIVE: 'SET_ALERT_ACTIVE',
+    SET_ALERT_NOT_ACTIVE: 'SET_ALERT_NOT_ACTIVE',
 }

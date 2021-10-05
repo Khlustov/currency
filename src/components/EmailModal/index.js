@@ -8,6 +8,7 @@ import { hideEmailModal,
          changeEmailSenderAdress, 
          changeEmailSenderMessage 
         } from '../../actions/emailModal';
+import { showAlert, hideAlert } from '../../actions/alerts'
 import emailjs from 'emailjs-com';
 
 const useStyles = makeStyles((theme) => ({
@@ -111,7 +112,9 @@ const EmailModal = () => {
         }, (error) => {
           console.log(error.text);
         });
-        setTimeout(() => {dispatch(hideEmailModal())}, 500)
+        dispatch(showAlert());
+        setTimeout(() => {dispatch(hideEmailModal())}, 500);
+        setTimeout(() => {dispatch(hideAlert())}, 2500);
     }
 
     return (
