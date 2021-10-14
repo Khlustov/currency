@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     emailModalWrapper: {
         width: '100%',
         height: '100vh',
-        backdropFilter: 'blur(1.5px)',
         position: 'fixed',
         top: '0',
         left: '0',
@@ -29,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
     emailModalWrapperActive: {
         width: '100%',
         height: '100vh',
-        backdropFilter: 'blur(1.5px)',
         position: 'fixed',
         top: '0',
         left: '0',
@@ -52,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#FFF',
         borderRadius: '10px',
         border: '1px solid #6d6d6d',
+        boxShadow: '5px 5px 10px 1px rgba(0, 0, 0, 0.5)',
     },
     inputContainer: {
         width: '100%',
